@@ -18,7 +18,7 @@ public class DropDownSearchPageTest {
     public void setUp() {
         Driver.getDriver().get(ConfigurationReader.getProperty("urlDropDown"));
         Driver.getDriver().manage().window().maximize();
-        Driver.getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        Driver.getDriver().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
     /*
 
@@ -31,7 +31,23 @@ public class DropDownSearchPageTest {
         4. Under US Outlying Territories assert that Guam & United States Minor Outlying Islands are disabled
     */
 
+    @Test
+    public void selectJapanTest() {
+        dropdownSearchPage.dropdownWithSearchBoxClick("Japan");
+        Assert.assertTrue(dropdownSearchPage.isCountrySelected("Japan"));
+    }
 
+    @Test
+    public void multiSelectDelewareAndVermont() {
+        dropdownSearchPage.selectMultipleStates("Delaware");
+        dropdownSearchPage.selectMultipleStates("Vermont");
+        Assert.assertTrue(dropdownSearchPage.isStateSelected("Delaware"));
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        Driver.getDriver().close();
+    }
 
 
 
